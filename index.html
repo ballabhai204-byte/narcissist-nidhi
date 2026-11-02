@@ -120,6 +120,9 @@ body.busy, body.busy *{cursor:wait !important}
 @media (max-width:640px){.grid{grid-template-columns:1fr}.board{padding:18px 4% 50px;min-height:max(1500px,calc(var(--mh,0px)*1.7)) !important}.board h1{font-size:22px}}
 .pol{background:radial-gradient(ellipse at 15% 0,rgba(212,168,84,.38),transparent 38%),radial-gradient(ellipse at 90% 100%,rgba(212,168,84,.32),transparent 42%),#f6f0e0;padding:12px 12px 26px;box-shadow:1px 2px 6px rgba(0,0,0,.4);transform:rotate(var(--pr,0deg));position:relative;transition:transform .2s}
 .pol.p{width:72%;margin:0 auto}
+.board.over-title h1{z-index:7}
+.board.over-title .grid{margin-top:-100px}
+@media (max-width:640px){.board.over-title .grid{margin-top:-52px}}
 .board.stktop .stk{z-index:8}
 @media (max-width:640px){.board.stktop .stk{scale:.62}}
 .pol.big,.pol.p.big{grid-column:1/-1;width:min(100%,500px);margin:0 auto}
@@ -514,7 +517,7 @@ Object.entries(TABS).forEach(([key,t],ti)=>{
   const b=document.createElement("button"); b.className="tab"; b.textContent=t.label; b.setAttribute("role","tab"); b.dataset.k=key;
   b.onclick=()=>showTab(key); tabsEl.appendChild(b);
 
-  const board=document.createElement("div"); board.className="board hidden"; board.id="board-"+key; if(t.stktop) board.classList.add("stktop");
+  const board=document.createElement("div"); board.className="board hidden"; board.id="board-"+key; if(t.stktop) board.classList.add("stktop"); if(key==="party") board.classList.add("over-title");
   board.innerHTML=`<div class="bunting"></div><h1></h1><div class="sub"></div><div class="grid"></div>`;
   board.querySelector("h1").textContent=t.title;
   if(t.titleImg&&IMGS[t.titleImg]){ const h1=board.querySelector("h1"); h1.textContent=""; const im=document.createElement("img"); im.src=IMGS[t.titleImg][2]; im.alt=t.title; im.className="hbd"; h1.appendChild(im); } board.querySelector(".sub").remove(); if(key!=="party"){ board.querySelector("h1").remove(); board.classList.add("nohead"); } /* no subtitles anywhere; only Party keeps its heading */
